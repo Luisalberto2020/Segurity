@@ -12,10 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 
 public class SegurityEvents implements Listener {
 
@@ -59,6 +56,18 @@ public class SegurityEvents implements Listener {
         HumanEntity player = event.getPlayer();
         if(!PlayerConected.playersConected.contains(player.getName())) {
             event.setCancelled(true);
+        }
+
+    }
+    @EventHandler
+    public void CommandExecution(PlayerCommandPreprocessEvent event){
+        Player player = event.getPlayer();
+        if(!PlayerConected.playersConected.contains(player.getName())) {
+            if(!event.getMessage().startsWith("/login" ) && !event.getMessage().startsWith("/register") && !event.getMessage().startsWith("/olvidar")){
+                player.sendMessage(ChatColor.RED + "Debes logearte para poder ejecutar este comando");
+                event.setCancelled(true);
+            }
+
         }
 
     }

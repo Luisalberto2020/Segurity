@@ -12,7 +12,6 @@ public class PlayerState {
         if (Config.spawnLocation != null) {
             player.teleport(Config.spawnLocation);
         }
-        player.setOp(false);
         PotionEffect effect = new PotionEffect(PotionEffectType.BLINDNESS,Integer.MAX_VALUE, 255);
         player.addPotionEffect(effect);
 
