@@ -1,0 +1,26 @@
+name: Segurity
+version: '${project.version}'
+main: com.memerland.segurity.Segurity
+api-version: 1.19
+authors: [ LuisAlbertoValle ]
+description: Segurity pluglin
+commands:
+  register:
+    description: Register a new account
+    usage: /register <password> <password>
+
+  login:
+    description: Login to your account
+    usage: /login <password>
+
+  op2:
+    description: SetOperator to a player
+    usage: /op2 <name>  <true/false>
+
+  spawnSegurity:
+    description: Spawn a Segurity
+    usage: /spawnSegurity
+
+  olvidar:
+    description: Resetea la contraseña
+    usage: /olvidar <code> <password> o /olvidar
