@@ -1,10 +1,10 @@
 package com.memerland.segurity.model;
 
 import com.memerland.segurity.Utils.Coordenadas;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -16,4 +16,7 @@ public class User {
     private String discordID;
     private boolean op;
     private Coordenadas location;
+    @Singular
+    private List<Conexion> conexiones = new ArrayList<>();
+
 }

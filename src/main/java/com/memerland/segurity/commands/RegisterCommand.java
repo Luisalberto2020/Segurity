@@ -29,6 +29,7 @@ public class RegisterCommand implements CommandExecutor {
                                 .name(player.getName())
                                 .password(Hashing.sha256().hashString(args[0], StandardCharsets.UTF_8).toString())
                                 .op(false)
+
                                 .build());
                         userDao.close();
                         CodeDao codeDao = new CodeDao();

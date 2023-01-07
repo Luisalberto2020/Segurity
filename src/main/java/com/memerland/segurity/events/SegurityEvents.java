@@ -19,8 +19,17 @@ public class SegurityEvents implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        PlayerState.connect(player);
-        player.sendMessage(ChatColor.YELLOW+ "Debes logearte para poder jugar");
+        UserDao userDao = new UserDao();
+        if (userDao.puedeLogeatde(player.getName())) {
+            player.sendMessage(ChatColor.GREEN + "Bienvenido " + ChatColor.YELLOW + player.getName());
+            PlayerConected.playersConected.add(player.getName());
+            userDao.deleteAcesso(player.getName());
+
+        } else {
+            PlayerState.connect(player);
+            player.sendMessage(ChatColor.YELLOW+ "Debes logearte para poder jugar");
+        }
+        userDao.close();
 
     }
     @EventHandler

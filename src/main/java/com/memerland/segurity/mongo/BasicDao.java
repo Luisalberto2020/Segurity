@@ -1,11 +1,14 @@
 package com.memerland.segurity.mongo;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.memerland.segurity.Segurity;
+import com.memerland.segurity.gsonSerializers.LocalDateTimeAdapterGson;
 import lombok.NoArgsConstructor;
 import org.bson.Document;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 
@@ -24,7 +27,7 @@ public class BasicDao <T,ID> extends MongoUtils {
     }
 
     public void save(T t) {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapterGson()).create();
         String json = gson.toJson(t);
         database.getCollection(collectionName).insertOne(Document.parse(json));
     }
@@ -35,7 +38,7 @@ public class BasicDao <T,ID> extends MongoUtils {
 
     public Optional<T> findById(ID id) {
         Document document = database.getCollection(collectionName).find(new Document("_id", id)).first();
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapterGson()).create();
         Segurity.instance.getLogger().info("Document: " + document.toJson());
 
         T t = null;
@@ -49,7 +52,7 @@ public class BasicDao <T,ID> extends MongoUtils {
         return Optional.ofNullable(t);
     }
     public void update(T t) {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapterGson()).create();
         String json = gson.toJson(t);
         database.getCollection(collectionName).replaceOne(
                 new Document("_id", ((Document) Document.parse(json).get("_id")).get("$oid")), Document.parse(json)

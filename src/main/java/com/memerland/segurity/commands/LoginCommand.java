@@ -4,6 +4,8 @@ import com.google.common.hash.Hashing;
 import com.memerland.segurity.Utils.PlayerConected;
 import com.memerland.segurity.Utils.PlayerState;
 import com.memerland.segurity.daos.UserDao;
+import com.memerland.segurity.model.Conexion;
+import com.memerland.segurity.model.TipoConexion;
 import com.memerland.segurity.model.User;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -13,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class LoginCommand implements CommandExecutor {
@@ -30,6 +33,15 @@ public class LoginCommand implements CommandExecutor {
                     if (user.get().getDiscordID() != null) {
                         PlayerState.login(player,user.get());
                         PlayerConected.playersConected.add(player.getName());
+                        Conexion conexion = Conexion.builder()
+                                .ip(player.getAddress().getAddress().getHostAddress())
+                                .fecha(LocalDateTime.now())
+                                .tipo(TipoConexion.INICIO)
+                                .build();
+                        UserDao userDao1 = new UserDao();
+                        userDao1.addConexion(player.getName(),conexion);
+                        userDao1.close();
+
                         player.sendMessage(ChatColor.GREEN + "Bienvenido " + ChatColor.YELLOW + player.getName());
                     }else {
                         player.sendMessage(ChatColor.RED + "No estas verificado en discord");

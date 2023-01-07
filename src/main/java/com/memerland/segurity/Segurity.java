@@ -3,6 +3,7 @@ package com.memerland.segurity;
 import com.memerland.segurity.Utils.Config;
 import com.memerland.segurity.commands.*;
 import com.memerland.segurity.discord.DiscordUtils;
+import com.memerland.segurity.events.LogsEvents;
 import com.memerland.segurity.events.SegurityEvents;
 import com.memerland.segurity.mongo.MongoUtils;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,6 +22,7 @@ public final class Segurity extends JavaPlugin {
        getCommand("spawnSegurity").setExecutor(new SpawnCommand());
        getCommand("olvidar").setExecutor(new OlvidarCommand());
          getServer().getPluginManager().registerEvents(new SegurityEvents(), this);
+         getServer().getPluginManager().registerEvents(new LogsEvents(), this);
 
 
         

@@ -1,5 +1,6 @@
 package com.memerland.segurity.discord;
 
+import com.memerland.segurity.Segurity;
 import com.memerland.segurity.daos.CodeDao;
 import com.memerland.segurity.daos.UserDao;
 import com.memerland.segurity.model.Code;
@@ -11,8 +12,10 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
+import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +28,16 @@ public class CommandManagerDiscord extends ListenerAdapter {
         comandos.add(
                 Commands.slash("verificar", "Verifica tu cuenta de discord con tu cuenta de minecraft")
                         .addOptions(opcion)
+        );
+        comandos.add(
+                Commands.slash("login", "Logueate")
+
+        );
+        OptionData opcion2 = new OptionData(OptionType.BOOLEAN, "bloquear", "bloquear",true );
+        comandos.add(
+                Commands.slash("bloquear", "Registrate").addOptions(opcion2)
+
+
         );
         event.getGuild().updateCommands().addCommands(comandos).queue();
     }
@@ -59,6 +72,46 @@ public class CommandManagerDiscord extends ListenerAdapter {
                   }
 
                 break;
+                  case "login":
+                      UserDao userDao = new UserDao();
+                      try {
+                          userDao.setLoginByDiscord(event.getUser().getId(), LocalDateTime.now());
+                          event.reply("Logueado correctamente").setEphemeral(true).queue();
+                          userDao.close();
+                      } catch (Exception e) {
+                            event.reply("Error al loguear").setEphemeral(true).queue();
+                      }
+                      break;
+                      case "bloquear":
+                          UserDao userDao1 = new UserDao();
+                          boolean bloquear = event.getOption("bloquear").getAsBoolean();
+                          try {
+                                Optional<User> userOptional = userDao1.findByDiscord(event.getUser().getId());
+                                if(userOptional.isPresent()){
+                                    User user = userOptional.get();
+                                    System.out.println(user);
+                                    if(bloquear){
+                                        Bukkit.getScheduler().runTask(Segurity.instance, () -> {
+                                          Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),"ban "+user.getName()+" bloqueado por discord");
+                                        });
+                                        event.reply("Cuenta bloqueada").setEphemeral(true).queue();
+
+
+                                    }else {
+                                        Bukkit.getScheduler().runTask(Segurity.instance, () -> {
+                                            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),"pardon "+user.getName());
+                                        });
+                                        event.reply("Cuenta desbloqueada").setEphemeral(true).queue();
+                                    }
+                                }
+
+
+
+                              userDao1.close();
+                          } catch (Exception e) {
+                                event.reply("Error al bloquear").setEphemeral(true).queue();
+                          }
+                          break;
 
 
        }
