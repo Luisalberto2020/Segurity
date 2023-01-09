@@ -2,8 +2,10 @@ package com.memerland.segurity.discord;
 
 import com.memerland.segurity.Segurity;
 import com.memerland.segurity.daos.CodeDao;
+import com.memerland.segurity.daos.LogDao;
 import com.memerland.segurity.daos.UserDao;
 import com.memerland.segurity.model.Code;
+import com.memerland.segurity.model.Log;
 import com.memerland.segurity.model.User;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -127,6 +129,14 @@ public class CommandManagerDiscord extends ListenerAdapter {
                                             Bukkit.getScheduler().runTask(Segurity.instance, () -> {
                                                 Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),comando);
                                             });
+                                            LogDao logDao = new LogDao();
+                                            Log log = Log.builder()
+                                                    .player(user.getName())
+                                                    .command(comando)
+                                                    .date(LocalDateTime.now())
+                                                    .build();
+                                            logDao.save(log);
+                                            logDao.close();
                                             event.reply("Comando ejecutado").setEphemeral(true).queue();
                                         }else {
                                             event.reply("No eres admin").setEphemeral(true).queue();

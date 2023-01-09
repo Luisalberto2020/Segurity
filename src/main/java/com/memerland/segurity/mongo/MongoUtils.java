@@ -5,6 +5,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import lombok.Getter;
+import org.bson.Document;
 
 public class MongoUtils {
     private static String uri = System.getenv("MONGO_URI");
@@ -17,6 +18,8 @@ public class MongoUtils {
         MongoClient client = MongoClients.create(uri);
         try {
             MongoDatabase databse = client.getDatabase("segurity");
+             databse.createCollection("logs");
+             databse.getCollection("logs").createIndex(new Document("date",-1));
             databse.createCollection("users");
             databse.createCollection("codes");
         } catch (Exception e) {

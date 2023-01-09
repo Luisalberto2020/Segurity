@@ -50,5 +50,15 @@ public class DiscordUtils {
 
         }
     }
+    public static  void sendChatMessage(String player,String message) {
+        try {
+            //TODO cambiar colores texto
+            jda.getTextChannelById(CHAT_MC_ID).sendMessage(""+player+" " +message).queue();
+        } catch (Exception e) {
+            Segurity.instance.getLogger().warning("Error al mandar el chat puede ser que no este activo todavia el bot");
+            Segurity.instance.getLogger().warning(e.getMessage());
+
+        }
+    }
 
 }
