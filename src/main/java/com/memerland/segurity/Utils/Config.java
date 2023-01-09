@@ -1,7 +1,6 @@
 package com.memerland.segurity.Utils;
 
 
-import com.memerland.segurity.Segurity;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 

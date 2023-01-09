@@ -1,6 +1,5 @@
 package com.memerland.segurity.model;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.memerland.segurity.gsonSerializers.LocalDateTimeAdapterGson;
 import lombok.AllArgsConstructor;

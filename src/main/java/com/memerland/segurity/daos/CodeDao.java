@@ -1,6 +1,5 @@
 package com.memerland.segurity.daos;
 
-import com.google.gson.Gson;
 import com.memerland.segurity.model.Code;
 import com.memerland.segurity.mongo.BasicDao;
 

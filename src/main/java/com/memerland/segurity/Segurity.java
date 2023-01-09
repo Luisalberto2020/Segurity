@@ -25,7 +25,11 @@ public final class Segurity extends JavaPlugin {
          getServer().getPluginManager().registerEvents(new LogsEvents(), this);
 
 
-        
+
+
+
+
+
 
         getLogger().info("Segurity is enabled");
         // Plugin startup logic

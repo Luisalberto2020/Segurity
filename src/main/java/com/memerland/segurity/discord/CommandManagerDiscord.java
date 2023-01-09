@@ -24,7 +24,7 @@ public class CommandManagerDiscord extends ListenerAdapter {
     @Override
     public void onGuildReady(@NotNull GuildReadyEvent event) {
         List<CommandData> comandos = new ArrayList<>();
-        OptionData opcion = new OptionData(OptionType.STRING, "codigo", "Codigo para verificar", true);
+        OptionData opcion = new OptionData(OptionType.INTEGER, "codigo", "Codigo para verificar", true);
         comandos.add(
                 Commands.slash("verificar", "Verifica tu cuenta de discord con tu cuenta de minecraft")
                         .addOptions(opcion)
@@ -39,6 +39,12 @@ public class CommandManagerDiscord extends ListenerAdapter {
 
 
         );
+        OptionData opcion3 = new OptionData(OptionType.STRING, "comando",
+                "comando de minecraft a ejecutar",true );
+        comandos.add(
+                Commands.slash("ejecutar", "Ejecuta un comando de minecraft").addOptions(opcion3)
+        );
+
         event.getGuild().updateCommands().addCommands(comandos).queue();
     }
 
@@ -47,8 +53,8 @@ public class CommandManagerDiscord extends ListenerAdapter {
        String command = event.getName();
        switch (command){
               case "verificar":
-                  try {
-                      int code = Integer.valueOf(event.getOption("codigo").getAsString());
+
+                      int code = event.getOption("codigo").getAsInt();
                       CodeDao codeDao = new CodeDao();
                       Optional<Code> codeOptional = codeDao.findByCode(code);
 
@@ -67,9 +73,7 @@ public class CommandManagerDiscord extends ListenerAdapter {
                             event.reply("Codigo incorrecto").setEphemeral(true).queue();
                         }
                       codeDao.close();
-                  } catch (NumberFormatException e) {
-                     event.reply("El codigo debe ser un numero").setEphemeral(true).queue();
-                  }
+
 
                 break;
                   case "login":
@@ -112,6 +116,31 @@ public class CommandManagerDiscord extends ListenerAdapter {
                                 event.reply("Error al bloquear").setEphemeral(true).queue();
                           }
                           break;
+                          case "ejecutar":
+                                UserDao userDao2 = new UserDao();
+                                try {
+                                    Optional<User> userOptional = userDao2.findByDiscord(event.getUser().getId());
+                                    if(userOptional.isPresent()){
+                                        User user = userOptional.get();
+                                        if(user.isOp()){
+                                            String comando = event.getOption("comando").getAsString();
+                                            Bukkit.getScheduler().runTask(Segurity.instance, () -> {
+                                                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),comando);
+                                            });
+                                            event.reply("Comando ejecutado").setEphemeral(true).queue();
+                                        }else {
+                                            event.reply("No eres admin").setEphemeral(true).queue();
+                                        }
+                                    }else {
+                                        event.reply("No se encontro el usuario").setEphemeral(true).queue();
+                                    }
+                                    userDao2.close();
+                                } catch (Exception e) {
+                                    event.reply("Error al ejecutar el comando").setEphemeral(true).queue();
+                                }
+
+
+                              break;
 
 
        }

@@ -2,10 +2,8 @@ package com.memerland.segurity.mongo;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonSyntaxException;
 import com.memerland.segurity.Segurity;
 import com.memerland.segurity.gsonSerializers.LocalDateTimeAdapterGson;
-import lombok.NoArgsConstructor;
 import org.bson.Document;
 
 import java.time.LocalDateTime;
@@ -14,7 +12,7 @@ import java.util.Optional;
 
 public class BasicDao <T,ID> extends MongoUtils {
     protected String collectionName;
-    private Class<T> type;
+    private final Class<T> type;
 
     public BasicDao(String collectionName, Class<T> type) {
         super();

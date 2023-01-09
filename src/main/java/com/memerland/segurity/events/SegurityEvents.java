@@ -1,12 +1,10 @@
 package com.memerland.segurity.events;
 
-import com.memerland.segurity.Utils.Config;
 import com.memerland.segurity.Utils.Coordenadas;
 import com.memerland.segurity.Utils.PlayerConected;
 import com.memerland.segurity.Utils.PlayerState;
 import com.memerland.segurity.daos.UserDao;
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

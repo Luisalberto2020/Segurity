@@ -1,6 +1,5 @@
 package com.memerland.segurity.commands;
 
-import com.google.gson.Gson;
 import com.memerland.segurity.Segurity;
 import com.memerland.segurity.Utils.Config;
 import com.memerland.segurity.Utils.ConfigFile;
@@ -12,7 +11,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class SpawnCommand implements CommandExecutor {
     @Override
@@ -25,7 +27,7 @@ public class SpawnCommand implements CommandExecutor {
                     file.delete();
                 }
                 try(BufferedWriter b =new BufferedWriter (new FileWriter(file))){
-                    Gson gson = new Gson();
+
                     ConfigFile configFile = ConfigFile.builder()
                             .spawnLocation(Coordenadas.fromLocation(player.getLocation())).build();
                     b.write(configFile.toJson());

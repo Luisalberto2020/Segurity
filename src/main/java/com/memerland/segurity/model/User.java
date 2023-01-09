@@ -14,9 +14,10 @@ public class User {
     private String name;
     private String password;
     private String discordID;
+    private int money;
     private boolean op;
     private Coordenadas location;
     @Singular
-    private List<Conexion> conexiones = new ArrayList<>();
+    private List<Conexion> connections = new ArrayList<>();
 
 }

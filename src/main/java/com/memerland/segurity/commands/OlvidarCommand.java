@@ -50,7 +50,7 @@ public class OlvidarCommand implements CommandExecutor {
             } else {
                 if (args.length == 2) {
                     CodeDao codeDao = new CodeDao();
-                    Optional<Code> code = null;
+                    Optional<Code> code = Optional.empty();
                     try {
                         code = codeDao.findById(Integer.valueOf(args[0]));
                     } catch (NumberFormatException e) {
