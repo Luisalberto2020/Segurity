@@ -2,6 +2,7 @@ package com.memerland.segurity.discord;
 
 import com.memerland.segurity.Segurity;
 import lombok.Getter;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -11,8 +12,8 @@ public class DiscordUtils {
     @Getter
     private static JDA jda;
     private static  final String LOGS_CHANNEL_ID = System.getenv("LOGS_CHANNEL_ID");
-    private static  final String CHAT_MC_ID = System.getenv("CHAT_MC_ID");
-    private static final  String TOKEN = System.getenv("DISCORD_TOKEN");
+    public static  final String CHAT_MC_ID = System.getenv("CHAT_MC_ID");
+    public static final  String TOKEN = System.getenv("DISCORD_TOKEN");
 
     public static  void init() {
         if (TOKEN == null) {
@@ -52,8 +53,12 @@ public class DiscordUtils {
     }
     public static  void sendChatMessage(String player,String message) {
         try {
-            //TODO cambiar colores texto
-            jda.getTextChannelById(CHAT_MC_ID).sendMessage(""+player+" " +message).queue();
+            EmbedBuilder embedBuilder = new EmbedBuilder();
+            embedBuilder.setTitle("Mensaje de "+player);
+            embedBuilder.setDescription(message);
+           jda.getTextChannelById(CHAT_MC_ID).sendMessageEmbeds(embedBuilder.build()).queue();
+
+
         } catch (Exception e) {
             Segurity.instance.getLogger().warning("Error al mandar el chat puede ser que no este activo todavia el bot");
             Segurity.instance.getLogger().warning(e.getMessage());

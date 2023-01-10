@@ -9,12 +9,15 @@ import com.memerland.segurity.model.Log;
 import com.memerland.segurity.model.User;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.message.GenericMessageEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -78,6 +81,14 @@ public class CommandManagerDiscord extends ListenerAdapter {
                 break;
 
 
+        }
+    }
+
+    @Override
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        if(event.getAuthor().isBot()) return;
+        if (event.getChannel().getId().equals(DiscordUtils.CHAT_MC_ID)){
+            Bukkit.broadcastMessage(ChatColor.GREEN +event.getAuthor().getName() + ": "+ ChatColor.RESET + event.getMessage().getContentRaw());
         }
     }
 
