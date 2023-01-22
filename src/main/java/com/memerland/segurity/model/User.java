@@ -1,6 +1,5 @@
 package com.memerland.segurity.model;
 
-import com.memerland.segurity.Utils.Coordenadas;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ public class User {
     private int money;
     private boolean op;
     private Coordenadas location;
-    @Singular
-    private List<Conexion> connections = new ArrayList<>();
+
 
 }

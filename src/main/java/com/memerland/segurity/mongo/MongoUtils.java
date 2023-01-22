@@ -18,6 +18,7 @@ public class MongoUtils {
         MongoClient client = MongoClients.create(uri);
         try {
             MongoDatabase databse = client.getDatabase("segurity");
+            databse.createCollection("transfers");
              databse.createCollection("logs");
              databse.getCollection("logs").createIndex(new Document("date",-1));
             databse.createCollection("users");

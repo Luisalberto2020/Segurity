@@ -1,11 +1,9 @@
 package com.memerland.segurity.events;
 
-import com.memerland.segurity.Utils.Coordenadas;
+import com.memerland.segurity.model.Coordenadas;
 import com.memerland.segurity.Utils.PlayerConected;
 import com.memerland.segurity.Utils.PlayerState;
-import com.memerland.segurity.daos.LogDao;
 import com.memerland.segurity.daos.UserDao;
-import com.memerland.segurity.model.Log;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -14,7 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.*;
 
-import java.time.LocalDateTime;
+
 
 public class SegurityEvents implements Listener {
 
@@ -85,16 +83,6 @@ public class SegurityEvents implements Listener {
             if (event.getMessage().startsWith("/login") || event.getMessage().startsWith("/register") || event.getMessage().startsWith("/olvidar")) {
               player.sendMessage(ChatColor.RED + "Ya estas logeado");
                 event.setCancelled(true);
-            }else {
-
-                LogDao logDao = new LogDao();
-                Log log = Log.builder()
-                        .player(event.getPlayer().getName())
-                        .command(event.getMessage())
-                        .date(LocalDateTime.now())
-                        .build();
-                logDao.save(log);
-                logDao.close();
             }
         }
 

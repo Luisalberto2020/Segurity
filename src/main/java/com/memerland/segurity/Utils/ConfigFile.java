@@ -1,6 +1,7 @@
 package com.memerland.segurity.Utils;
 
 import com.google.gson.Gson;
+import com.memerland.segurity.model.Coordenadas;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

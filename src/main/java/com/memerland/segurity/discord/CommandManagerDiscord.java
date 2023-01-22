@@ -1,15 +1,13 @@
 package com.memerland.segurity.discord;
 
+import com.memerland.segurity.Errors.EconomyException;
 import com.memerland.segurity.Segurity;
 import com.memerland.segurity.daos.CodeDao;
-import com.memerland.segurity.daos.LogDao;
 import com.memerland.segurity.daos.UserDao;
 import com.memerland.segurity.model.Code;
-import com.memerland.segurity.model.Log;
 import com.memerland.segurity.model.User;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -55,7 +53,17 @@ public class CommandManagerDiscord extends ListenerAdapter {
         commands.add(
                 Commands.slash("ip", "Da la ip del servidor")
         );
-
+        OptionData opcion1transfer = new OptionData(OptionType.USER, "jugador",
+                "dinero a enviar", true);
+        OptionData opcion2transfer = new OptionData(OptionType.INTEGER, "dinero",
+                "dinero a enviar", true);
+        commands.add(
+                Commands.slash("transferir", "Envia dinero a otro jugador").addOptions(opcion1transfer)
+                        .addOptions(opcion2transfer)
+        );
+        commands.add(
+                Commands.slash("balance", "Muestra tu balance")
+        );
 
         event.getGuild().updateCommands().addCommands(commands).queue();
     }
@@ -79,8 +87,47 @@ public class CommandManagerDiscord extends ListenerAdapter {
             case "ip":
                 ip(event);
                 break;
+            case "transferir":
+                transferir(event);
+                break;
+            case "balance":
+                balance(event);
+                break;
 
 
+        }
+    }
+
+    private void balance(SlashCommandInteractionEvent event) {
+        UserDao userDao = new UserDao();
+        Optional<User> user = userDao.findByDiscord(event.getUser().getId());
+
+        if (user.isPresent()) {
+            event.reply("Tu balance es de " + user.get().getMoney() + " Memecoins").setEphemeral(true).queue();
+        } else {
+            event.reply("No estas registrado").queue();
+        }
+    }
+
+    private void transferir(SlashCommandInteractionEvent event) {
+
+        UserDao userDao = new UserDao();
+        Optional<User> UserDa = userDao.findByDiscord(event.getUser().getId());
+        if(UserDa.isPresent()){
+            String id = event.getOption("jugador").getAsUser().getId();
+            Optional<User> userRecibe = userDao.findByDiscord(id);
+            if (userRecibe.isPresent()){
+                int money = event.getOption("dinero").getAsInt();
+                try {
+                    userDao.transferMoney(UserDa.get().getName(),userRecibe.get().getName(),money);
+                    event.reply("Se ha transferido el dinero").setEphemeral(true).queue();
+                } catch (EconomyException e) {
+                    event.reply("Error no se ha podido hacer la transferencia "+e.getMessage()).setEphemeral(true).queue();
+                    return;
+                }
+                userDao.close();
+
+            }
         }
     }
 
@@ -117,14 +164,8 @@ public class CommandManagerDiscord extends ListenerAdapter {
                     Bukkit.getScheduler().runTask(Segurity.instance, () -> {
                         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), comando);
                     });
-                    LogDao logDao = new LogDao();
-                    Log log = Log.builder()
-                            .player(user.getName())
-                            .command(comando)
-                            .date(LocalDateTime.now())
-                            .build();
-                    logDao.save(log);
-                    logDao.close();
+                    Bukkit.getLogger().info("<" + user.getName()+ "> ejecuto el comando " + comando);
+
                     event.reply("Comando ejecutado").setEphemeral(true).queue();
                 } else {
                     event.reply("No eres admin").setEphemeral(true).queue();

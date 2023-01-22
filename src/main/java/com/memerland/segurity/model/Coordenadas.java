@@ -1,4 +1,4 @@
-package com.memerland.segurity.Utils;
+package com.memerland.segurity.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

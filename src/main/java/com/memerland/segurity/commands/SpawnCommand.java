@@ -3,7 +3,7 @@ package com.memerland.segurity.commands;
 import com.memerland.segurity.Segurity;
 import com.memerland.segurity.Utils.Config;
 import com.memerland.segurity.Utils.ConfigFile;
-import com.memerland.segurity.Utils.Coordenadas;
+import com.memerland.segurity.model.Coordenadas;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

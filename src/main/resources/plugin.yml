@@ -24,3 +24,11 @@ commands:
   olvidar:
     description: Resetea la contraseña
     usage: /olvidar <code> <password> o /olvidar
+
+  balance:
+    description: Muestra el balance
+    usage: /balance
+
+  trnaferir:
+    description: Transfiere dinero
+    usage: /transferir <name> <cantidad>

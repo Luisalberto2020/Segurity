@@ -5,9 +5,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.memerland.segurity.Errors.EconomyException;
 import com.memerland.segurity.Segurity;
-import com.memerland.segurity.Utils.Coordenadas;
+import com.memerland.segurity.model.Coordenadas;
 import com.memerland.segurity.gsonSerializers.LocalDateTimeAdapterGson;
-import com.memerland.segurity.model.Conexion;
+import com.memerland.segurity.model.Transfer;
 import com.memerland.segurity.model.User;
 import com.memerland.segurity.mongo.BasicDao;
 import com.mongodb.client.model.Projections;
@@ -101,19 +101,7 @@ public class UserDao extends BasicDao<User, String> {
         } catch (NullPointerException e) {
         }
     }
-    public void addConexion(String name, Conexion conexion){
-        try {
-            database.getCollection(collectionName).updateOne(
-                    new Document("name", name), new Document("$push", new Document("connections", new BasicBSONObject(
-                            "ip",conexion.getIp())
-                            .append("fecha",conexion.getFecha().format(LocalDateTimeAdapterGson.formatter))
-                            .append("tipo",conexion.getTipo().toString())))
 
-            );
-        } catch (NullPointerException e) {
-            Segurity.instance.getLogger().warning("Error al añadir conexion a la base de datos");
-        }
-    }
 
     public void setLoginByDiscord(String discordID,LocalDateTime fecha){
         try {
@@ -169,13 +157,15 @@ public class UserDao extends BasicDao<User, String> {
         }
     }
 
-    public void addMoney(String name, int money){
+    public void addMoney(String name, int money) throws EconomyException {
+
         try {
             database.getCollection(collectionName).updateOne(
                     new Document("name", name), new Document("$inc", new Document("money", money))
             );
         } catch (NullPointerException e) {
             Segurity.instance.getLogger().warning("Error al añadir conexion a la base de datos");
+            throw new EconomyException("No se ha podido añadir el dinero");
         }
     }
   public int getMoney(String name){
@@ -192,6 +182,10 @@ public class UserDao extends BasicDao<User, String> {
 
     public void takeMoney(String name, int money) throws EconomyException {
         int moneyUser = getMoney(name);
+        if (money < 0){
+            throw new EconomyException("No puedes quitar una cantidad negativa");
+        }
+
         if(moneyUser >= money){
             addMoney(name, -money);
         }else {
@@ -201,6 +195,12 @@ public class UserDao extends BasicDao<User, String> {
     public void transferMoney(String pagador, String recibidor, int money) throws EconomyException {
         takeMoney(pagador, money);
         addMoney(recibidor, money);
+        Transfer transfer = new Transfer(pagador, recibidor, money);
+        TransferDao transferDao = new TransferDao();
+        transferDao.save(transfer);
+        transferDao.close();
+
+
     }
 
 
