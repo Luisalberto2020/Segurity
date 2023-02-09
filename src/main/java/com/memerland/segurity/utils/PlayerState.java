@@ -1,4 +1,4 @@
-package com.memerland.segurity.Utils;
+package com.memerland.segurity.utils;
 
 import com.memerland.segurity.model.User;
 import org.bukkit.GameMode;

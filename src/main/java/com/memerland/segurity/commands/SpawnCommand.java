@@ -1,8 +1,8 @@
 package com.memerland.segurity.commands;
 
 import com.memerland.segurity.Segurity;
-import com.memerland.segurity.Utils.Config;
-import com.memerland.segurity.Utils.ConfigFile;
+import com.memerland.segurity.utils.Config;
+import com.memerland.segurity.utils.ConfigFile;
 import com.memerland.segurity.model.Coordenadas;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -23,9 +23,10 @@ public class SpawnCommand implements CommandExecutor {
             if(player.isOp()){
                 Config.spawnLocation = player.getLocation();
                 File file = new File(Segurity.instance.getDataFolder(), "config.json");
-                if(file.exists()){
-                    file.delete();
-                }
+                if(file.exists() && !file.delete()){
+                        Segurity.instance.getLogger().warning("No se ha podido borrar el archivo config.json");
+                    }
+
                 try(BufferedWriter b =new BufferedWriter (new FileWriter(file))){
 
                     ConfigFile configFile = ConfigFile.builder()

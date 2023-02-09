@@ -1,4 +1,4 @@
-package com.memerland.segurity.Utils;
+package com.memerland.segurity.utils;
 
 import com.google.gson.Gson;
 import com.memerland.segurity.model.Coordenadas;
@@ -25,7 +25,7 @@ public class ConfigFile {
    public static ConfigFile fromJson(File file){
        try(BufferedReader b = new BufferedReader(new FileReader(file))){
            return new Gson().fromJson(b, ConfigFile.class);
-       } catch (IOException e) {
+       } catch (IOException ignored) {
 
        }
        return null;

@@ -1,6 +1,7 @@
 package com.memerland.segurity.commands;
 
 import com.memerland.segurity.daos.UserDao;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,7 +15,8 @@ public class BalanceCommand implements CommandExecutor {
         if(sender instanceof Player player) {
             UserDao userDao = new UserDao();
 
-            player.sendMessage("Tu balance es de: " + userDao.getMoney(player.getName()));
+            player.sendMessage("Tu balance es de: " + ChatColor.GREEN+ userDao.getMoney(player.getName()) + ChatColor.WHITE
+                    + " Memecoins");
         }
 
 

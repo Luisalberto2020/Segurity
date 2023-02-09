@@ -1,4 +1,4 @@
-package com.memerland.segurity.Utils;
+package com.memerland.segurity.utils;
 
 import java.util.HashMap;
 import java.util.HashSet;

@@ -29,6 +29,6 @@ commands:
     description: Muestra el balance
     usage: /balance
 
-  trnaferir:
+  transferir:
     description: Transfiere dinero
     usage: /transferir <name> <cantidad>

@@ -1,8 +1,8 @@
 package com.memerland.segurity.events;
 
 import com.memerland.segurity.model.Coordenadas;
-import com.memerland.segurity.Utils.PlayerConected;
-import com.memerland.segurity.Utils.PlayerState;
+import com.memerland.segurity.utils.PlayerConected;
+import com.memerland.segurity.utils.PlayerState;
 import com.memerland.segurity.daos.UserDao;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.HumanEntity;

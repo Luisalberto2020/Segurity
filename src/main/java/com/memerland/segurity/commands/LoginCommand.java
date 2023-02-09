@@ -2,10 +2,9 @@ package com.memerland.segurity.commands;
 
 import com.google.common.hash.Hashing;
 import com.memerland.segurity.Segurity;
-import com.memerland.segurity.Utils.PlayerConected;
-import com.memerland.segurity.Utils.PlayerState;
+import com.memerland.segurity.utils.PlayerConected;
+import com.memerland.segurity.utils.PlayerState;
 import com.memerland.segurity.daos.UserDao;
-import com.memerland.segurity.model.TipoConexion;
 import com.memerland.segurity.model.User;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -16,7 +15,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class LoginCommand implements CommandExecutor {
