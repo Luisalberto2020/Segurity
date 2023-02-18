@@ -16,6 +16,8 @@ public class User {
     private int money;
     private boolean op;
     private Coordenadas location;
+    @Singular
+    private List<Sale> sales;
 
 
 }

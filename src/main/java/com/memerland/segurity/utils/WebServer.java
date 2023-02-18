@@ -2,6 +2,7 @@ package com.memerland.segurity.utils;
 
 
 import com.memerland.segurity.Segurity;
+import com.memerland.segurity.servlets.HomeServlet;
 import com.memerland.segurity.servlets.LoginServlet;
 
 import org.eclipse.jetty.server.*;
@@ -63,8 +64,13 @@ public static void startServer() throws Exception {
         context.setContextPath("/login");
         context.addServlet(new ServletHolder(new LoginServlet()), "");
 
+        ServletContextHandler homeContext = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        homeContext.setContextPath("/home");
+        homeContext.addServlet(new ServletHolder(new HomeServlet()), "");
+
         handlers.addHandler(context);
         handlers.addHandler(contextHandler);
+        handlers.addHandler(homeContext);
 
         return handlers;
     }
