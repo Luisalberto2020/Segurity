@@ -35,7 +35,8 @@ public class HomeServlet extends HttpServlet {
                 userDao.close();
                 if(user.isPresent()){
                     validToken = true;
-                    context.setVariable("name",user.get().getName());
+                    context.setVariable("username",user.get().getName());
+
                     context.setVariable("money",user.get().getMoney());
                 }else {
                     Arrays.stream(req.getCookies()).filter(cookie -> cookie.getName().equals("token")).

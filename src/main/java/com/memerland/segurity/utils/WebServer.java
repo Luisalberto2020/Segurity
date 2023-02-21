@@ -2,8 +2,7 @@ package com.memerland.segurity.utils;
 
 
 import com.memerland.segurity.Segurity;
-import com.memerland.segurity.servlets.HomeServlet;
-import com.memerland.segurity.servlets.LoginServlet;
+import com.memerland.segurity.servlets.*;
 
 import org.eclipse.jetty.server.*;
 import org.eclipse.jetty.server.handler.ContextHandler;
@@ -47,38 +46,26 @@ public static void startServer() throws Exception {
 
 }
 
-    private static HandlerList addPages() {
-        HandlerList handlers = new HandlerList();
+    private static ServletContextHandler addPages() {
+
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        ResourceHandler resourceHandler = new ResourceHandler();
-        resourceHandler.setDirectoriesListed(false);
-        resourceHandler.setWelcomeFiles(new String[]{"index.html"});
-        resourceHandler.setResourceBase(Segurity.instance.getClass().getClassLoader().getResource("assets").toString());
-        resourceHandler.setCacheControl("max-age=3600,public");
-
-        ContextHandler contextHandler = new ContextHandler();
-        contextHandler.setContextPath("/assets");
-        contextHandler.setHandler(resourceHandler);
-
-
-        context.setContextPath("/login");
+        context.setContextPath("/");
         context.addServlet(new ServletHolder(new LoginServlet()), "");
+        context.addServlet(new ServletHolder(new HomeServlet()), "/home");
+        context.addServlet(new ServletHolder(new AssetsServlet()), "/assets/*");
+        context.addServlet(new ServletHolder(new LogoutServlet()), "/logout");
 
-        ServletContextHandler homeContext = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        homeContext.setContextPath("/home");
-        homeContext.addServlet(new ServletHolder(new HomeServlet()), "");
 
-        handlers.addHandler(context);
-        handlers.addHandler(contextHandler);
-        handlers.addHandler(homeContext);
 
-        return handlers;
+
+        return context;
     }
 
     private static void tymeleaf() {
         templateResolver = new ClassLoaderTemplateResolver();
         templateResolver.setPrefix("/templates/");
         templateResolver.setSuffix(".html");
+        templateResolver.setCharacterEncoding("UTF-8");
         templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setCacheable(false);
 

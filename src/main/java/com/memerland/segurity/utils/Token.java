@@ -49,6 +49,8 @@ public class Token {
                 validToken = true;
             }
 
+            Segurity.instance.getLogger().info("Tken primitivo" + token);
+
 
         } catch (Exception e) {
             throw new TokenException("Token invalido" + e.getMessage());
