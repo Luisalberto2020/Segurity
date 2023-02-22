@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.jetbrains.annotations.Nullable;
 
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -29,7 +28,7 @@ public class AssetsServlet extends HttpServlet {
             resp.sendError(404);
             return;
         }
-        //resp.setContentType(getContentType(path));
+        resp.setContentType(getContentType(path));
         file.transferTo(resp.getOutputStream());
 
     }

@@ -1,6 +1,7 @@
 package com.memerland.segurity.utils;
 
 
+import com.google.common.reflect.ClassPath;
 import com.memerland.segurity.Segurity;
 import com.memerland.segurity.servlets.*;
 
@@ -38,7 +39,18 @@ public static void startServer() throws Exception {
 
 
     server.setConnectors(new Connector[]{connector});
-    server.setHandler(addPages());
+    HandlerList handlers = new HandlerList();
+    ResourceHandler resourceHandler = new ResourceHandler();
+
+    resourceHandler.setDirectoriesListed(false);
+    resourceHandler.setWelcomeFiles(new String[]{"index.html"});
+    resourceHandler.setResourceBase(Segurity.instance.getClass().getResource("/assets").toString());
+    ContextHandler staticContextHandler = new ContextHandler();
+    staticContextHandler.setContextPath("/assets");
+    staticContextHandler.setHandler(resourceHandler);
+    handlers.addHandler(staticContextHandler);
+    handlers.addHandler(addPages());
+    server.setHandler(handlers);
     tymeleaf();
     server.start();
 
@@ -52,7 +64,7 @@ public static void startServer() throws Exception {
         context.setContextPath("/");
         context.addServlet(new ServletHolder(new LoginServlet()), "");
         context.addServlet(new ServletHolder(new HomeServlet()), "/home");
-        context.addServlet(new ServletHolder(new AssetsServlet()), "/assets/*");
+        //context.addServlet(new ServletHolder(new AssetsServlet()), "/assets/*");
         context.addServlet(new ServletHolder(new LogoutServlet()), "/logout");
 
 

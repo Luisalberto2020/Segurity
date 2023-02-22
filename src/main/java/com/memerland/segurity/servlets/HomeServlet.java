@@ -26,7 +26,7 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Context context = new Context();
-        boolean validToken = true;
+        boolean validToken = false;
         try {
             Optional<Token> token = WebUtiils.verifyToken(req);
             if(token.isPresent()){
