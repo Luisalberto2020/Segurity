@@ -1,5 +1,6 @@
 package com.memerland.segurity.daos;
 
+import com.google.common.hash.Hashing;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
@@ -15,6 +16,7 @@ import com.mongodb.client.model.Updates;
 import org.bson.BasicBSONObject;
 import org.bson.Document;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -50,11 +52,12 @@ public class UserDao extends BasicDao<User, String> {
 
     }
     public Optional<User> findByNameAndPassword(String name, String password) {
+        
         Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapterGson()).create();
         User user;
         try {
             user = gson.fromJson(database.getCollection(collectionName).find(new Document("name", name)
-                    .append("password", password)).first().toJson(), User.class
+                    .append("password", Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString())).first().toJson(), User.class
             );
         } catch (NullPointerException e) {
             user = null;
