@@ -6,6 +6,9 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import com.memerland.segurity.servlets.HomeServlet;
 import com.memerland.segurity.servlets.LoginServlet;
+import com.memerland.segurity.servlets.LogoutServlet;
+import com.memerland.segurity.servlets.NotFoundServlet;
+import com.memerland.segurity.servlets.ProfileServlet;
 
 import io.javalin.Javalin;
 
@@ -21,8 +24,12 @@ public static void startServer() throws Exception {
         app.get("/home", new HomeServlet());
          app.get("/login", new LoginServlet());
         app.post("/login", new LoginServlet());
-        /*app.get("/logout", new LogoutServlet());
-        app.get("/assets/*", new AssetsServlet()); */
+        app.get("/logout", new LogoutServlet());
+        app.get("/profile", new ProfileServlet());
+        app.post("/profile", new ProfileServlet());
+       
+        app.error(404, new NotFoundServlet());
+        
     });
 
     thymeleaf();

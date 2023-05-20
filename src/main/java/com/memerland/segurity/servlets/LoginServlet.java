@@ -20,20 +20,23 @@ public class LoginServlet implements Handler {
     @Override
     public void handle(Context context) throws Exception {
 
-     
+        if (context.cookie("token") != null) {
+            
+            context.redirect("/home");
+        }
       
 
         if (context.method().toString().equals("POST")) {
             String username = context.formParam("username");
             String password = context.formParam("password");
             UserDao userDao = new UserDao();
-            Optional<User> opuser = userDao.findByNameAndPassword(username, password);
+            Optional<User> opUser = userDao.findByNameAndPassword(username, password);
             userDao.close();
-            if(opuser.isPresent()){
-                User user = opuser.get();
+            if(opUser.isPresent()){
+                User user = opUser.get();
                 Token token = new Token(String.valueOf((int)(Math.random()*10000)),user.getName(),user.isOp(), LocalDateTime.now()
                 .plus(1, ChronoUnit.HOURS));
-                Segurity.instance.getLogger().info("Token generado: "+token.toStringFormat());
+                
                 context.cookie("token", token.toStringFormat(), 3600);
                 context.redirect("/home");
                 

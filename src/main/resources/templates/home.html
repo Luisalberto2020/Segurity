@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Dashboard - Memeland</title>
+  <title>Memeland / Home</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -37,7 +37,7 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
   <div class="d-flex align-items-center justify-content-between">
-    <a href="index.html" class="logo d-flex align-items-center">
+    <a href="home" class="logo d-flex align-items-center">
       <img src="/assets/img/logo.png" alt="">
       <span class="d-none d-lg-block">Memeland</span>
     </a>
@@ -137,7 +137,7 @@
 
         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
           <li class="dropdown-header">
-            <h6 th:text="${username}">Kevin Anderson</h6>
+            <h6 th:text="${user.getName()}">Kevin Anderson</h6>
           </li>
           <li>
             <hr class="dropdown-divider">
@@ -184,14 +184,14 @@
   <ul class="sidebar-nav" id="sidebar-nav">
 
     <li class="nav-item">
-      <a class="nav-link " href="index.html">
+      <a class="nav-link " href="/home">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
       </a>
     </li>
 
     <li class="nav-item">
-      <a class="nav-link " href="index.html">
+      <a class="nav-link " href="profile">
         <i class="bi bi-grid"></i>
         <span>Mi perfil </span>
       </a>
@@ -199,7 +199,7 @@
 
 
     <li class="nav-item">
-      <a class="nav-link " href="index.html">
+      <a class="nav-link " href="shop">
         <i class="bi bi-grid"></i>
         <span>Tienda</span>
       </a>
@@ -207,7 +207,7 @@
 
 
     <li class="nav-item">
-      <a class="nav-link " href="index.html">
+      <a class="nav-link " href="transfer">
         <i class="bi bi-grid"></i>
         <span>Transferencia</span>
       </a>
@@ -227,7 +227,7 @@
     <h1>Dashboard</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item"><a href="home">Home</a></li>
         <li class="breadcrumb-item active">Dashboard</li>
       </ol>
     </nav>
@@ -375,7 +375,7 @@
     <!-- You can delete the links only if you purchased the pro version. -->
     <!-- Licensing information: https://bootstrapmade.com/license/ -->
     <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-    Designed by <a href="https://bootstrapmade.com/">Luis Alberto Valle</a>
+    Designed by Luis Alberto Valle</a>
   </div>
 </footer><!-- End Footer -->
 

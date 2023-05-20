@@ -24,9 +24,7 @@ public class LoginCommand implements CommandExecutor {
         if (sender instanceof Player player) {
             if (args.length == 1) {
                 UserDao userDao = new UserDao();
-                Optional<User> user = userDao.findByNameAndPassword(
-                        player.getName(), Hashing.sha256().hashString(args[0], StandardCharsets.UTF_8).toString()
-                );
+                Optional<User> user = userDao.findByNameAndPassword(player.getName(),args[0]);
                 userDao.close();
                 if(user.isPresent()) {
                     if (user.get().getDiscordID() != null) {
