@@ -14,7 +14,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.nio.charset.StandardCharsets;
+
 import java.util.Optional;
 
 public class LoginCommand implements CommandExecutor {

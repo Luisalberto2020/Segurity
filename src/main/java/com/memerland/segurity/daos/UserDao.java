@@ -150,6 +150,15 @@ public class UserDao extends BasicDao<User, String> {
 
 
     }
+    public void updateProfile(String name1,String name,String discordID){
+        try {
+            database.getCollection(collectionName).updateOne(
+                    new Document("name", name1), new Document("$set", new Document("discordID", discordID).append("name", name))
+            );
+        } catch (NullPointerException e) {
+        }
+    }
+
     public void deleteAcesso(String name){
         try {
             database.getCollection(collectionName).updateOne(
@@ -205,6 +214,8 @@ public class UserDao extends BasicDao<User, String> {
 
 
     }
+
+    
 
 
 }

@@ -26,6 +26,9 @@ public class HomeServlet implements Handler {
                 ctx.setVariable("user", user);
                 context.html(WebServer.getTemplateEngine().process("home", ctx));
 
+            }else {
+                context.removeCookie("token");
+                context.redirect("/login");
             }
 
         }

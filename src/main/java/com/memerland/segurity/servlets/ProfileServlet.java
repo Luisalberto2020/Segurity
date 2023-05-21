@@ -27,6 +27,7 @@ public class ProfileServlet implements Handler {
             thymeleafContext.setVariable("user",opUser.get() );
                ctx.html(WebServer.getTemplateEngine().process("profile", thymeleafContext));
         }else{
+            ctx.removeCookie("token");
             ctx.redirect("/login");
         }
     }else{
