@@ -11,6 +11,7 @@ import com.memerland.segurity.gsonSerializers.LocalDateTimeAdapterGson;
 import com.memerland.segurity.model.Transfer;
 import com.memerland.segurity.model.User;
 import com.memerland.segurity.mongo.BasicDao;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.Updates;
 import org.bson.BasicBSONObject;
@@ -18,6 +19,8 @@ import org.bson.Document;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UserDao extends BasicDao<User, String> {
@@ -212,6 +215,20 @@ public class UserDao extends BasicDao<User, String> {
         transferDao.save(transfer);
         transferDao.close();
 
+
+    }
+
+    public List<String> getAllUserNames(){
+        List<String> names = new ArrayList<>();
+        try {
+            MongoCursor<Document> cursor = database.getCollection(collectionName).find().projection(Projections.include("name")).iterator();
+            while (cursor.hasNext()){
+                names.add(cursor.next().getString("name"));
+            }
+        } catch (NullPointerException e) {
+            Segurity.instance.getLogger().warning("Error al añadir conexion a la base de datos");
+        }
+        return names;
 
     }
 

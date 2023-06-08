@@ -11,6 +11,7 @@ import com.memerland.segurity.servlets.LogoutServlet;
 import com.memerland.segurity.servlets.NotFoundServlet;
 import com.memerland.segurity.servlets.ProfileServlet;
 import com.memerland.segurity.servlets.ProfileUpdateServlet;
+import com.memerland.segurity.servlets.TransferServlet;
 
 import io.javalin.Javalin;
 
@@ -32,6 +33,10 @@ public static void startServer() throws Exception {
         
 
         app.post("/actions/profile/update", new ProfileUpdateServlet());
+
+
+        app.get("/transfer", new TransferServlet());
+        app.post("/transfer", new TransferServlet());
         
        
         app.error(404, new NotFoundServlet());
