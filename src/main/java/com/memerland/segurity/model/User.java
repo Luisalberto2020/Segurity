@@ -18,6 +18,8 @@ public class User {
     private Coordenadas location;
     @Singular
     private List<Sale> sales;
+    @Singular
+    private List<Transfer> transfers;
 
 
 }

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import com.memerland.segurity.Segurity;
+import com.memerland.segurity.daos.TransferDao;
 import com.memerland.segurity.daos.UserDao;
+import com.memerland.segurity.model.Transfer;
 import com.memerland.segurity.model.User;
 import com.memerland.segurity.utils.Token;
 import com.memerland.segurity.utils.WebServer;
@@ -27,6 +29,7 @@ public class TransferServlet implements Handler {
             Optional<User> opUser = userDao.findByName(token.get().getName());
             ArrayList<String> users = (ArrayList<String>) userDao.getAllUserNames();
             userDao.close();
+            users.remove(token.get().getName());
             context.setVariable("users", users);
             if (opUser.isPresent()) {
                 User user = opUser.get();
@@ -39,6 +42,7 @@ public class TransferServlet implements Handler {
             if ( method.equals("POST")){
                 String username = ctx.formParam("username");
                 String money = ctx.formParam("money");
+                String error = "";
                 if (username != null && money != null){
                     UserDao userDao2 = new UserDao();
                     try {
@@ -50,9 +54,24 @@ public class TransferServlet implements Handler {
                   
                    
                     }else{
-                        context.setVariable("error", "Transferencia fallida");
+                       
                     }
+                    if (error.isEmpty()){
+                        ctx.redirect("/transfer");
+                    }else {
+                        ctx.redirect("/transfer?error="+error);
+                    }
+            }else {
+                String error = ctx.queryParam("error");
+                if (error != null){
+                    context.setVariable("error", error);
+                }
             }
+            TransferDao transferDao = new TransferDao();
+            ArrayList<Transfer> transfers =  (ArrayList<Transfer>) transferDao.getTransfers(token.get().getName());
+            transferDao.close();
+            Segurity.instance.getLogger().info("Transfers: " + transfers);
+            context.setVariable("transfers", transfers);
 
 
             render(ctx, context);

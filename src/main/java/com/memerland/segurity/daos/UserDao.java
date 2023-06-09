@@ -214,6 +214,7 @@ public class UserDao extends BasicDao<User, String> {
         TransferDao transferDao = new TransferDao();
         transferDao.save(transfer);
         transferDao.close();
+        Segurity.instance.getLogger().info("Se ha realizado una transferencia de " + money + " de " + pagador + " a " + recibidor);
 
 
     }
