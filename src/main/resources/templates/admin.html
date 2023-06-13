@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Memeland / Home</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Favicons -->
+    <link href="/assets/img/favicon.png" rel="icon" />
+    <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+      rel="stylesheet"
+    />
+
+    <!-- Vendor CSS Files -->
+    <link
+      href="/assets/vendor/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+    />
+    <link
+      href="/assets/vendor/boxicons/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link href="/assets/vendor/quill/quill.snow.css" rel="stylesheet" />
+    <link href="/assets/vendor/quill/quill.bubble.css" rel="stylesheet" />
+    <link href="/assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
+    <link href="/assets/vendor/simple-datatables/style.css" rel="stylesheet" />
+
+    <!-- Template Main CSS File -->
+    <link href="/assets/css/style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <script src="/assets/js/admin.js"></script>
+    <script src="/assets/js/utils.js"></script>
+
+    <!-- ======= Header ======= -->
+    <div th:insert="fragments :: nav"></div>
+
+    <main id="main" class="main">
+      <div class="alert alert-success invisible" id="alertS" role="alert">
+        Producto añadido correctamente
+      </div>
+      <div class="card recent-sales overflow-auto">
+        <div class="card-body">
+          <h5 class="card-title">Crear Producto</h5>
+          <h5><a href="https://minecraft-ids.grahamedgecombe.com">Items</a></h5>
+            
+            <div class="row">
+              <div class="col">
+                <input
+                  type="text"
+                  name="nombre"
+                  class="form-control"
+                  placeholder="nombre"
+                  id = "name"
+                />
+              </div>
+              <div class="col">
+                <input
+                  type="number"
+                  name="price"
+                  class="form-control"
+                  placeholder="precio"
+                  id = "price"
+                />
+              </div>
+              <div class="col">
+                <input
+                  type="number"
+                  name="seller"
+                  class="form-control"
+                  placeholder="vender"
+                  id = "seller"
+                />
+            </div>
+            <div class="row mt-3 mb-3">
+              <div class="col mb-2 mt-2">
+                <button onclick="addItem()" class="btn btn-primary ">Add item</button>
+                <button onclick="sendForm()" class="btn btn-success ">Crear</button>
+                
+              </div>
+           
+            <div id="div-productos">
+              <div class="row">
+                <div class="col">
+                  <input
+                    type="text"
+                    name="id-item1"
+                    class="form-control item-form"
+                    placeholder="id item"
+                  />
+                </div>
+                <div class="col">
+                  <input
+                    type="text"
+                    name="nombre-item1"
+                    class="form-control item-form"
+                    placeholder="nombre"
+                  />
+                </div>
+                  <div class="col">
+                    <input
+                      type="number"
+                      name="cantidad-item1"
+                      class="form-control item-form"
+                      placeholder="cantidad"
+                    />
+                
+              </div>
+              
+
+
+            </div>
+          
+        </div>
+      </div>
+    </main>
+    <!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <div th:insert="fragments :: footer"></div>
+  </body>
+</html>

@@ -13,6 +13,7 @@ import com.memerland.segurity.servlets.LogoutServlet;
 import com.memerland.segurity.servlets.NotFoundServlet;
 import com.memerland.segurity.servlets.ProfileServlet;
 import com.memerland.segurity.servlets.ProfileUpdateServlet;
+import com.memerland.segurity.servlets.ShopServlet;
 import com.memerland.segurity.servlets.TransferServlet;
 
 import io.javalin.Javalin;
@@ -32,6 +33,11 @@ public static void startServer() throws Exception {
         app.get("/logout", new LogoutServlet());
         app.get("/profile", new ProfileServlet());
         app.post("/profile", new ProfileServlet());
+
+        app.post("/admin/additem", new AddProductServlet());
+
+
+        app.get("/shop",new ShopServlet());
         
 
         app.post("/actions/profile/update", new ProfileUpdateServlet());
@@ -42,7 +48,7 @@ public static void startServer() throws Exception {
 
 
         app.get("/admin",new AdminServlet());
-        app.post("/additem",new AddProductServlet());
+    
         
        
         app.error(404, new NotFoundServlet());

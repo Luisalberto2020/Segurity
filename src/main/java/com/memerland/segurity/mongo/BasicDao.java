@@ -6,7 +6,10 @@ import com.memerland.segurity.Segurity;
 import com.memerland.segurity.gsonSerializers.LocalDateTimeAdapterGson;
 import org.bson.Document;
 
+import java.lang.reflect.Type;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -55,6 +58,15 @@ public class BasicDao <T,ID> extends MongoUtils {
         database.getCollection(collectionName).replaceOne(
                 new Document("_id", ((Document) Document.parse(json).get("_id")).get("$oid")), Document.parse(json)
         );
+    }
+    public List<T> findAll() {
+        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapterGson()).create();
+        List<Document> documents = database.getCollection(collectionName).find().into(new java.util.ArrayList<>());
+        ArrayList<T> list = new ArrayList<>();
+        for (Document document : documents) {
+            list.add(gson.fromJson(document.toJson(), type));
+        }
+        return list;
     }
 
 
