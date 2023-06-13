@@ -12,17 +12,16 @@ public class MongoUtils {
     @Getter
     protected MongoClient client;
     @Getter
-    protected  MongoDatabase database;
+    protected MongoDatabase database;
 
     public static void createDatabase() {
         MongoClient client = MongoClients.create(uri);
         try {
-            MongoDatabase databse = client.getDatabase("segurity");
-            databse.createCollection("transfers");
-             databse.createCollection("logs");
-             databse.getCollection("logs").createIndex(new Document("date",-1));
-            databse.createCollection("users");
-            databse.createCollection("codes");
+            MongoDatabase database = client.getDatabase("segurity");
+            database.createCollection("products");
+            database.createCollection("transfers");
+            database.createCollection("users");
+            database.createCollection("codes");
         } catch (Exception e) {
             Segurity.instance.getLogger().info("Database already exists");
         } finally {
@@ -30,6 +29,7 @@ public class MongoUtils {
         }
 
     }
+
     public MongoUtils() {
         if (uri == null) {
             uri = "mongodb://localhost:27017";
@@ -41,10 +41,5 @@ public class MongoUtils {
     public void close() {
         client.close();
     }
-
-
-    
-
-
 
 }

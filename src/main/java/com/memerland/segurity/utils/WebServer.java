@@ -5,6 +5,8 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import com.memerland.segurity.Segurity;
+import com.memerland.segurity.servlets.AddProductServlet;
+import com.memerland.segurity.servlets.AdminServlet;
 import com.memerland.segurity.servlets.HomeServlet;
 import com.memerland.segurity.servlets.LoginServlet;
 import com.memerland.segurity.servlets.LogoutServlet;
@@ -37,6 +39,10 @@ public static void startServer() throws Exception {
 
         app.get("/transfer", new TransferServlet());
         app.post("/transfer", new TransferServlet());
+
+
+        app.get("/admin",new AdminServlet());
+        app.post("/additem",new AddProductServlet());
         
        
         app.error(404, new NotFoundServlet());

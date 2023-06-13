@@ -28,6 +28,20 @@ public class WebUtils {
             }
             return Optional.empty();
         }
+        public static Optional<Token> checkTokenAdmin(Context context){
+            Optional<Token> opToken = checkToken(context);
+
+            if (opToken.isPresent()){
+                if (opToken.get().isAdmin()){
+                    return opToken;
+                }else{
+                    context.removeCookie("token");
+                    context.redirect("/login");
+                    
+                }
+            }
+            return Optional.empty();
+        }
 
     }
 
