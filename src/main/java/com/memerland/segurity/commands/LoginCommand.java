@@ -1,6 +1,5 @@
 package com.memerland.segurity.commands;
 
-import com.google.common.hash.Hashing;
 import com.memerland.segurity.Segurity;
 import com.memerland.segurity.utils.PlayerConected;
 import com.memerland.segurity.utils.PlayerState;

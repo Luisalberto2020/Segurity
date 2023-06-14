@@ -4,7 +4,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
-import com.memerland.segurity.Segurity;
+
 import com.memerland.segurity.servlets.AddProductServlet;
 import com.memerland.segurity.servlets.AdminServlet;
 import com.memerland.segurity.servlets.HomeServlet;
@@ -19,7 +19,8 @@ import com.memerland.segurity.servlets.TransferServlet;
 import io.javalin.Javalin;
 
 public class WebServer {
-    private static Javalin server;
+    
+
     private static  ClassLoaderTemplateResolver templateResolver;
 
 public static void startServer() throws Exception {

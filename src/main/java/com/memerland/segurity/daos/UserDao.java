@@ -7,9 +7,11 @@ import com.google.gson.JsonSyntaxException;
 import com.memerland.segurity.Errors.EconomyException;
 import com.memerland.segurity.Segurity;
 import com.memerland.segurity.model.Coordenadas;
+import com.memerland.segurity.model.Sale;
 import com.memerland.segurity.gsonSerializers.LocalDateTimeAdapterGson;
 import com.memerland.segurity.model.Transfer;
 import com.memerland.segurity.model.User;
+import com.memerland.segurity.model.WrapperProduct;
 import com.memerland.segurity.mongo.BasicDao;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Projections;
@@ -231,6 +233,41 @@ public class UserDao extends BasicDao<User, String> {
         }
         return names;
 
+    }
+    public void buy(String itemName,int quantity,String name) throws EconomyException {
+        WrapperproductDao wrapperproductDao = new WrapperproductDao();
+        Optional<WrapperProduct> wrapperproduct = wrapperproductDao.findByName(itemName);
+        wrapperproductDao.close();
+        if(wrapperproduct.isPresent()){
+         Optional<User> opUser = findByName(name); 
+         if (opUser.isPresent()){
+                User user = opUser.get();
+                int pay = wrapperproduct.get().getPrice() * quantity;
+                if (user.getMoney() >= pay ){
+                    takeMoney(name, pay);
+                    addSale(new Sale((int)(Math.random()*100000)
+                    ,wrapperproduct.get().getName() +" X "+ quantity
+                    ,pay), name);
+                    
+                }else {
+                    throw new EconomyException("No tienes suficiente dinero");
+                }
+         }else {
+             throw new EconomyException("No existe el usuario");
+         }
+        }else {
+            throw new EconomyException("No existe el producto");
+        }
+
+    }
+    public void addSale(Sale sale,String name){
+        try {
+            database.getCollection(collectionName).updateOne(
+                    new Document("name", name), Updates.addToSet("sales", new Gson().toJson(sale))
+            );
+        } catch (NullPointerException e) {
+            Segurity.instance.getLogger().warning("Error al añadir conexion a la base de datos");
+        }
     }
 
     

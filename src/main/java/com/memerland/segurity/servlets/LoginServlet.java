@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
-import com.memerland.segurity.Segurity;
+
 import com.memerland.segurity.daos.UserDao;
 import com.memerland.segurity.model.User;
 import com.memerland.segurity.utils.Token;

@@ -66,7 +66,9 @@ try{
 }
 document.getElementById("alertS").classList.remove("invisible");
 
-
+setTimeout(function(){
+    document.getElementById("alertS").classList.add("invisible");
+}, 5000);
 
 
 
