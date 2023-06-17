@@ -1,7 +1,7 @@
 package com.memerland.segurity.events;
 
 import com.memerland.segurity.discord.DiscordUtils;
-import io.papermc.paper.event.player.AsyncChatEvent;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;

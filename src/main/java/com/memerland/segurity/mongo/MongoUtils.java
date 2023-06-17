@@ -5,7 +5,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import lombok.Getter;
-import org.bson.Document;
+
 
 public class MongoUtils {
     private static String uri = System.getenv("MONGO_URI");
@@ -31,9 +31,7 @@ public class MongoUtils {
     }
 
     public MongoUtils() {
-        if (uri == null) {
-            uri = "mongodb://localhost:27017";
-        }
+       
         client = MongoClients.create(uri);
         database = client.getDatabase("segurity");
     }

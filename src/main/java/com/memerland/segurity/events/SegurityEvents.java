@@ -1,7 +1,7 @@
 package com.memerland.segurity.events;
 
 import com.memerland.segurity.model.Coordenadas;
-import com.memerland.segurity.utils.PlayerConected;
+import com.memerland.segurity.utils.PlayerConnected;
 import com.memerland.segurity.utils.PlayerState;
 import com.memerland.segurity.daos.UserDao;
 import org.bukkit.ChatColor;
@@ -22,7 +22,7 @@ public class SegurityEvents implements Listener {
         UserDao userDao = new UserDao();
         if (userDao.puedeLogeatde(player.getName())) {
             player.sendMessage(ChatColor.GREEN + "Bienvenido " + ChatColor.YELLOW + player.getName());
-            PlayerConected.playersConected.add(player.getName());
+            PlayerConnected.playersConnected.add(player.getName());
             userDao.deleteAcesso(player.getName());
 
         } else {
@@ -38,14 +38,14 @@ public class SegurityEvents implements Listener {
         UserDao userDao = new UserDao();
         userDao.saveLocation(player.getName(), Coordenadas.fromLocation(player.getLocation()));
         userDao.close();
-        PlayerConected.playersConected.remove(player.getName());
+        PlayerConnected.playersConnected.remove(player.getName());
 
     }
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
-        if(!PlayerConected.playersConected.contains(player.getName())) {
+        if(!PlayerConnected.playersConnected.contains(player.getName())) {
            event.setCancelled(true);
         }
 
@@ -54,7 +54,7 @@ public class SegurityEvents implements Listener {
     @EventHandler
     public void playerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        if(!PlayerConected.playersConected.contains(player.getName())) {
+        if(!PlayerConnected.playersConnected.contains(player.getName())) {
             event.setCancelled(true);
         }
 
@@ -63,7 +63,7 @@ public class SegurityEvents implements Listener {
     @EventHandler
     public void playerOpenInvetory(InventoryOpenEvent event) {
         HumanEntity player = event.getPlayer();
-        if(!PlayerConected.playersConected.contains(player.getName())) {
+        if(!PlayerConnected.playersConnected.contains(player.getName())) {
             event.setCancelled(true);
         }
 
@@ -71,7 +71,7 @@ public class SegurityEvents implements Listener {
     @EventHandler
     public void CommandExecution(PlayerCommandPreprocessEvent event){
         Player player = event.getPlayer();
-        if(!PlayerConected.playersConected.contains(player.getName())) {
+        if(!PlayerConnected.playersConnected.contains(player.getName())) {
             if(!event.getMessage().startsWith("/login" ) && !event.getMessage().startsWith("/register") && !event.getMessage().startsWith("/olvidar")){
                 player.sendMessage(ChatColor.RED + "Debes logearte para poder ejecutar este comando");
                 event.setCancelled(true);

@@ -234,7 +234,7 @@ public class UserDao extends BasicDao<User, String> {
         return names;
 
     }
-    public void buy(String itemName,int quantity,String name) throws EconomyException {
+    public Optional<WrapperProduct> buy(String itemName,int quantity,String name) throws EconomyException {
         WrapperproductDao wrapperproductDao = new WrapperproductDao();
         Optional<WrapperProduct> wrapperproduct = wrapperproductDao.findByName(itemName);
         wrapperproductDao.close();
@@ -258,6 +258,7 @@ public class UserDao extends BasicDao<User, String> {
         }else {
             throw new EconomyException("No existe el producto");
         }
+        return wrapperproduct;
 
     }
     public void addSale(Sale sale,String name){
@@ -269,7 +270,6 @@ public class UserDao extends BasicDao<User, String> {
             Segurity.instance.getLogger().warning("Error al añadir conexion a la base de datos");
         }
     }
-
     
 
 

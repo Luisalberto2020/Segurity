@@ -1,7 +1,7 @@
 package com.memerland.segurity.commands;
 
 import com.memerland.segurity.Segurity;
-import com.memerland.segurity.utils.PlayerConected;
+import com.memerland.segurity.utils.PlayerConnected;
 import com.memerland.segurity.utils.PlayerState;
 import com.memerland.segurity.daos.UserDao;
 import com.memerland.segurity.model.User;
@@ -28,23 +28,23 @@ public class LoginCommand implements CommandExecutor {
                 if(user.isPresent()) {
                     if (user.get().getDiscordID() != null) {
                         PlayerState.login(player,user.get());
-                        PlayerConected.playersConected.add(player.getName());
+                        PlayerConnected.playersConnected.add(player.getName());
                         Segurity.instance.getLogger().info(  "<"+player.getName() + "> se ha conectado correctamente");
 
                         player.sendMessage(ChatColor.GREEN + "Bienvenido " + ChatColor.YELLOW + player.getName());
-                        PlayerConected.intentosLogin.remove(player.getName());
+                        PlayerConnected.intentosLogin.remove(player.getName());
                     }else {
                         player.sendMessage(ChatColor.RED + "No estas verificado en discord");
                     }
                 } else {
                     player.sendMessage(ChatColor.RED + "Contraseña incorrecta");
-                    PlayerConected.intentosLogin.put(player.getName(), PlayerConected.intentosLogin.getOrDefault(player.getName(), 0) + 1);
+                    PlayerConnected.intentosLogin.put(player.getName(), PlayerConnected.intentosLogin.getOrDefault(player.getName(), 0) + 1);
                     Segurity.instance.getLogger().warning(  "<"+player.getName() + "> ha intentado conectarse con contraseña incorrecta");
-                    if (PlayerConected.intentosLogin.get(player.getName()) ==  3) {
+                    if (PlayerConnected.intentosLogin.get(player.getName()) ==  3) {
                         player.sendMessage(ChatColor.RED + "Has intentado conectarte 3 veces con contraseña incorrecta si lo vuelvbes a intentar 2 veces mas seras baneado por ip");
                         Segurity.instance.getLogger().warning(  "<"+player.getName() + "> ha intentado conectarse 3 veces con contraseña incorrecta");
                     }
-                    if (PlayerConected.intentosLogin.get(player.getName()) >=  5) {
+                    if (PlayerConnected.intentosLogin.get(player.getName()) >=  5) {
                        Segurity.instance.getServer().dispatchCommand(Bukkit.getConsoleSender(), "ban " +player.getName() + " baneado por intentos de login fallidos");
                         Segurity.instance.getLogger().warning(  "<"+player.getName() + "> ha sido baneado por intentar conectarse con contraseña incorrecta");
                     }
