@@ -1,7 +1,7 @@
 name: Segurity
 version: '${project.version}'
 main: com.memerland.segurity.Segurity
-api-version: 1.19
+api-version: 1.20
 authors: [ LuisAlbertoValle ]
 description: Segurity pluglin
 commands:
