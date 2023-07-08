@@ -8,7 +8,7 @@ import com.memerland.segurity.utils.Token;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 
-public class DeleteProduct implements Handler {
+public class DeleteProductServlet implements Handler {
 
     @Override
     public void handle(Context ctx) throws Exception {
@@ -38,6 +38,8 @@ public class DeleteProduct implements Handler {
                         wrapperproductDao.deleteByName(wrapperDeleteProduct.getId());
                         wrapperproductDao.close();
                         ctx.status(200);
+                    }else {
+                        ctx.status(401);
                     }
                    }
 

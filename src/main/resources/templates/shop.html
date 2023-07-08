@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>Memeland / Home</title>
+    <title>Memeland / Shop</title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
@@ -93,14 +93,13 @@
               <form>
                 <div class="row">
                   <div class="col">
-                    <input type="number" id="quantity" class="form-control quantity"  placeholder="Cantidad" value="1" th:attr="data-price=${product.getPrice()}">
+                    <input type="number" class="form-control quantity" min="1"  placeholder="Cantidad" value="1" th:attr="data-price=${product.getPrice()}">
                   </div>
                   <div class="col">
                     <button type="submit" class="btn btn-primary">Comprar</button>
-                    <button th:if="${user.isOp()}"  class="btn btn-danger">Eliminar</button>
                   </div>
-                  <div class="col" th:if="${user.isOp()}">
-                    <button id="delete"   class="btn btn-danger">Eliminar</button>
+                  <div class="col mx-1" th:if="${user.isOp()}">
+                    <button th:attr="data-id=${product.getName()}"   class="btn btn-danger delete-product mt-1">Eliminar</button>
                   </div>
                 </div>
               </form>

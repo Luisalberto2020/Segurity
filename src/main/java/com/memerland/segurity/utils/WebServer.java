@@ -8,6 +8,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import com.memerland.segurity.servlets.AddProductServlet;
 import com.memerland.segurity.servlets.AdminServlet;
 import com.memerland.segurity.servlets.BuyItemServlet;
+import com.memerland.segurity.servlets.DeleteProductServlet;
 import com.memerland.segurity.servlets.HomeServlet;
 import com.memerland.segurity.servlets.LoginServlet;
 import com.memerland.segurity.servlets.LogoutServlet;
@@ -38,6 +39,7 @@ public static void startServer() throws Exception {
 
         app.post("/shop/buy", new BuyItemServlet());
         app.post("/admin/additem", new AddProductServlet());
+        app.post("/admin/products/delete",new DeleteProductServlet());
 
 
         app.get("/shop",new ShopServlet());
@@ -51,6 +53,7 @@ public static void startServer() throws Exception {
 
 
         app.get("/admin",new AdminServlet());
+        
     
         
        

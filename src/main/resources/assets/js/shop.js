@@ -1,19 +1,20 @@
 function updatePrize(event){
     var price = event.target.dataset.price;
     var quantity = event.target.value;
+    var spanPrice = event.target.parentNode.parentNode.parentNode.parentNode.querySelector('span.span-price');
+    spanPrice.innerHTML = price * quantity;
 
-    event.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.span-price').textContent = price  * quantity ;
-    console.log(event.parentNode.parentNode.parentNode.parentNode.parentNode);
+
     
 }
 
 function deleteProduct(event){
     var id = event.target.dataset.id;
-    var url = event.target.dataset.url;
-    var token = event.target.dataset.token;
+    var url = '/admin/products/delete'
+    var token = getToken();
     var data = {
         'id': id,
-        '_token': token
+        'token': token
     };
     fetch(url, {
         method: 'POST',
@@ -26,6 +27,7 @@ function deleteProduct(event){
     }).then(function(data) {
         if(data.success){
             event.target.parentNode.parentNode.remove();
+            alert("Producto eliminado correctamente");
         }
     });
 }
@@ -37,8 +39,15 @@ Array.from(quantities).forEach(function(element) {
 });
 
 window.addEventListener("DOMContentLoaded", (event) => {
-    let quantity = document.getElementById('quantity');
-    quantity.addEventListener('change', updatePrize);
-    let deleteBtn = document.getElementById('delete');
-    deleteBtn.addEventListener('click', deleteProduct);
+   let quantities = document.getElementsByClassName('quantity')
+    Array.from(quantities).forEach(function(element) {
+        element.addEventListener('change', updatePrize)
+    });
+
+
+    let deleteButtons = document.getElementsByClassName('delete-product');
+    Array.from(deleteButtons).forEach(function(element) {
+        element.addEventListener('click', deleteProduct)
+    }
+    );
   });
