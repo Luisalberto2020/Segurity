@@ -24,6 +24,7 @@ public class HomeServlet implements Handler {
                 User user = opUser.get();
                 org.thymeleaf.context.Context ctx = new org.thymeleaf.context.Context();
                 ctx.setVariable("user", user);
+                
                 context.html(WebServer.getTemplateEngine().process("home", ctx));
 
             }else {

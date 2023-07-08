@@ -2,6 +2,8 @@ package com.memerland.segurity.servlets;
 
 import java.util.Optional;
 
+import org.bukkit.Material;
+
 import com.memerland.segurity.daos.UserDao;
 import com.memerland.segurity.utils.Token;
 import com.memerland.segurity.utils.WebServer;
@@ -21,6 +23,7 @@ public class AdminServlet implements Handler {
                 org.thymeleaf.context.Context thymeleafContext = new org.thymeleaf.context.Context();
                 userDao.findByName(opToken.get().getName()).ifPresent(user -> {
                     thymeleafContext.setVariable("user", user);
+                    thymeleafContext.setVariable("products", Material.values());
                     userDao.close();
                     ctx.html(WebServer.getTemplateEngine().process("admin", thymeleafContext));
                 });

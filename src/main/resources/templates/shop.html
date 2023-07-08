@@ -42,19 +42,40 @@
   </head>
 
   <body>
-    <script src="/assets/js/admin.js"></script>
+    <script src="/assets/js/shop.js"></script>
     <script src="/assets/js/utils.js"></script>
 
     <!-- ======= Header ======= -->
     <div th:insert="fragments :: nav"></div>
 
     <main id="main" class="main">
+     
+      <div class="col-xxl-4 col-md-6 mx-auto">
+      
+        <div class="card info-card revenue-card">
+          <div class="card-body">
+            <h5 class="card-title text-center">Dinero</h5>
+
+            <div class="d-flex align-items-center">
+              <div
+                class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+              >
+                <i class="bi bi-currency-dollar"></i>
+              </div>
+              <div class="ps-3">
+                <h6 class="text-center" th:text="'$'+${user.getMoney()}">$3,264</h6>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+      </div>
       <div class="row">
         <div class="col-md-4" th:each="product : ${products}">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-center" th:text="${product.getName()}">Producto 1</h5>
-              <h6 class="card-subtitle mb-2 text-muted text-center" >Precio: $<span th:text="${product.getPrice()}"></span></h6>
+              <h6 class="card-subtitle mb-2 text-muted text-center" >Precio: $<span class="span-price" th:text="${product.getPrice()}"></span></h6>
               <table class="table">
                 <thead>
                   <tr>
@@ -72,10 +93,14 @@
               <form>
                 <div class="row">
                   <div class="col">
-                    <input type="number" class="form-control" placeholder="Cantidad" value="1">
+                    <input type="number" id="quantity" class="form-control quantity"  placeholder="Cantidad" value="1" th:attr="data-price=${product.getPrice()}">
                   </div>
                   <div class="col">
                     <button type="submit" class="btn btn-primary">Comprar</button>
+                    <button th:if="${user.isOp()}"  class="btn btn-danger">Eliminar</button>
+                  </div>
+                  <div class="col" th:if="${user.isOp()}">
+                    <button id="delete"   class="btn btn-danger">Eliminar</button>
                   </div>
                 </div>
               </form>

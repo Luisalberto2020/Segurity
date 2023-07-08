@@ -1,6 +1,5 @@
 package com.memerland.segurity.servlets;
 
-import com.memerland.segurity.Segurity;
 import com.memerland.segurity.utils.WebServer;
 
 import io.javalin.http.Context;

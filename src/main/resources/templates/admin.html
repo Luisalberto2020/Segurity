@@ -126,6 +126,27 @@
           
         </div>
       </div>
+
+      <div class="card recent-sales overflow-auto">
+        <div class="card-body">
+          <h5 class="card-title">Lista productos</h5>
+          <table class="table table-borderless datatable">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="i,product : ${products}">
+                <td th:text="${i}"></td>
+                <td th:text="${product}"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
+
     </main>
     <!-- End #main -->
 

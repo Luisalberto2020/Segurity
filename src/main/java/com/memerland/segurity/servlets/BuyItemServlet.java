@@ -2,10 +2,6 @@ package com.memerland.segurity.servlets;
 
 import java.util.Optional;
 
-import org.bukkit.Bukkit;
-
-import org.bukkit.scheduler.BukkitScheduler;
-
 import com.memerland.segurity.Segurity;
 import com.memerland.segurity.Errors.EconomyException;
 import com.memerland.segurity.Errors.TokenException;

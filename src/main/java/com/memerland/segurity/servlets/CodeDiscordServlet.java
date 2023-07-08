@@ -2,7 +2,6 @@ package com.memerland.segurity.servlets;
 
 import java.util.Optional;
 
-import com.memerland.segurity.Errors.TokenException;
 import com.memerland.segurity.daos.UserDao;
 import com.memerland.segurity.discord.DiscordUtils;
 import com.memerland.segurity.utils.Token;

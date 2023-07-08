@@ -20,5 +20,9 @@ public class WrapperproductDao extends BasicDao<WrapperProduct,String> {
 
         
     }
+
+    public void deleteByName(String name) {
+        database.getCollection(collectionName).deleteOne(new Document("name", name));
+    }
     
 }
