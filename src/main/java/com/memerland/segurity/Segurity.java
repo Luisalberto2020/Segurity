@@ -1,5 +1,6 @@
 package com.memerland.segurity;
 
+import com.memerland.segurity.utils.BackupUtils;
 import com.memerland.segurity.utils.Config;
 import com.memerland.segurity.utils.WebServer;
 import com.memerland.segurity.commands.*;
@@ -7,6 +8,8 @@ import com.memerland.segurity.discord.DiscordUtils;
 import com.memerland.segurity.events.ChatsEvents;
 import com.memerland.segurity.events.SegurityEvents;
 import com.memerland.segurity.mongo.MongoUtils;
+import com.memerland.segurity.schedulers.BackupSchedule;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Segurity extends JavaPlugin {
@@ -25,6 +28,20 @@ public final class Segurity extends JavaPlugin {
         } catch (Exception e) {
            getLogger().warning("Error starting web server" + e.getMessage());
         }
+        BackupUtils.createFolderBackup();
+        try{
+            BackupUtils.createBackup();
+        }catch (Exception e){
+            getLogger().warning("Error creating backup" + e.getMessage());
+        }
+        try {
+            BackupUtils.deleteBackupDaysAgo();
+        }catch (Exception e){
+            getLogger().warning("Error deleting backup" + e.getMessage());
+        }
+
+        new BackupSchedule().runTaskTimer(this, 0, 20*3600*2);
+
 
     }
 
