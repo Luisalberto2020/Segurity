@@ -9,19 +9,21 @@ public class BackupSchedule extends BukkitRunnable {
 
     @Override
     public void run() {
-        
-        try{
-            BackupUtils.createBackup();
-            
 
-        }catch (Exception e){
-            Segurity.instance.getLogger().warning("Error creating backup" + e.getMessage());
-        }
-        try {
-            BackupUtils.deleteBackupDaysAgo();
-        } catch (Exception e) {
-            Segurity.instance.getLogger().warning("Error deleting backup" + e.getMessage());
-        }
+        new Thread(() -> {
+            try {
+                BackupUtils.createBackup();
+            } catch (Exception e) {
+                Segurity.instance.getLogger().warning("Error creating backup" + e.getMessage());
+            }
+            try {
+                BackupUtils.deleteBackupDaysAgo();
+            } catch (Exception e) {
+                Segurity.instance.getLogger().warning("Error deleting old backups" + e.getMessage());
+            }
+        }).start();
+        
+       
     }
     
 }

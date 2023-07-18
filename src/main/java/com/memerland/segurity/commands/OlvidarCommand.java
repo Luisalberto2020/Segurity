@@ -35,6 +35,12 @@ public class OlvidarCommand implements CommandExecutor {
                                 user.get().getDiscordID(),
                                 "Has solicitado un cambio de contraseña tu codigo de cambiar la contraseña"
                                         + " es: " + code.get_id());
+                    }else {
+                        Code code = new Code(player.getName());
+                        CodeDao codeDao = new CodeDao();
+                        codeDao.save(code);
+                        codeDao.close();
+                        player.sendMessage(ChatColor.GREEN + "Al no estar registrado en discord el codigo es " +  ChatColor.YELLOW + code.get_id());
                     }
                 } else {
                     UserDao userDao1 = new UserDao();

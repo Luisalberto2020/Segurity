@@ -23,6 +23,10 @@ public class SpawnCommand implements CommandExecutor {
             if(player.isOp()){
                 Config.spawnLocation = player.getLocation();
                 File file = new File(Segurity.instance.getDataFolder(), "config.json");
+                File folder = Segurity.instance.getDataFolder();
+                if(!folder.exists()){
+                    folder.mkdir();
+                }
                 if(file.exists() && !file.delete()){
                         Segurity.instance.getLogger().warning("No se ha podido borrar el archivo config.json");
                     }
@@ -32,8 +36,10 @@ public class SpawnCommand implements CommandExecutor {
                     ConfigFile configFile = ConfigFile.builder()
                             .spawnLocation(Coordenadas.fromLocation(player.getLocation())).build();
                     b.write(configFile.toJson());
+                    player.sendMessage(ChatColor.GREEN+"Se ha establecido el spawn correctamente");
                 } catch (IOException e) {
                     e.printStackTrace();
+                    player.sendMessage(ChatColor.RED+"No se ha podido establecer el spawn");
                 }
 
 

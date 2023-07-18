@@ -13,9 +13,8 @@ public class Config {
        File file = new File(plugin.getDataFolder(), "config.json");
          if(file.exists()){
               ConfigFile configFile = ConfigFile.fromJson(file);
-              if(spawnLocation != null){
-                  spawnLocation = configFile.getSpawnLocation().toLocation();
-              }
+              spawnLocation = configFile.getSpawnLocation().toLocation();
+              
 
          }
     }

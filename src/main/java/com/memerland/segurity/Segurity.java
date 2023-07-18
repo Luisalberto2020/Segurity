@@ -29,16 +29,7 @@ public final class Segurity extends JavaPlugin {
            getLogger().warning("Error starting web server" + e.getMessage());
         }
         BackupUtils.createFolderBackup();
-        try{
-            BackupUtils.createBackup();
-        }catch (Exception e){
-            getLogger().warning("Error creating backup" + e.getMessage());
-        }
-        try {
-            BackupUtils.deleteBackupDaysAgo();
-        }catch (Exception e){
-            getLogger().warning("Error deleting backup" + e.getMessage());
-        }
+       
 
         new BackupSchedule().runTaskTimer(this, 0, 20*3600*2);
 

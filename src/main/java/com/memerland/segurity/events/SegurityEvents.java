@@ -1,6 +1,7 @@
 package com.memerland.segurity.events;
 
 import com.memerland.segurity.model.Coordenadas;
+import com.memerland.segurity.utils.Config;
 import com.memerland.segurity.utils.PlayerConnected;
 import com.memerland.segurity.utils.PlayerState;
 import com.memerland.segurity.daos.UserDao;
@@ -30,15 +31,22 @@ public class SegurityEvents implements Listener {
             player.sendMessage(ChatColor.YELLOW+ "Debes logearte para poder jugar");
         }
         userDao.close();
+        if (Config.spawnLocation != null) {
+            
+            player.teleport(Config.spawnLocation);
+        }
+
 
     }
     @EventHandler
     public void onPlayerDisconnect(PlayerQuitEvent event) {
         Player player = event.getPlayer();
+        if (PlayerConnected.playersConnected.contains(player.getName())){
         UserDao userDao = new UserDao();
         userDao.saveLocation(player.getName(), Coordenadas.fromLocation(player.getLocation()));
         userDao.close();
         PlayerConnected.playersConnected.remove(player.getName());
+        }
 
     }
 

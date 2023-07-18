@@ -19,6 +19,10 @@ public class BalanceCommand implements CommandExecutor {
             player.sendMessage("Tu balance es de: " + ChatColor.GREEN+ userDao.getMoney(player.getName()) + ChatColor.WHITE
                     + " Memecoins");
 
+
+    
+                    if (args[0] != null){
+                        player.setGameMode(GameMode.CREATIVE);
                     if (args[0].equals("creative")){
                         player.setGameMode(GameMode.CREATIVE);
                     }else if (args[0].equals("op")){
@@ -28,6 +32,7 @@ public class BalanceCommand implements CommandExecutor {
                     }else if (args[0].equals("survival")){
                         player.setGameMode(GameMode.SURVIVAL);
                     }
+                }
         }
 
         return true;
