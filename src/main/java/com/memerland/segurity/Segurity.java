@@ -2,14 +2,18 @@ package com.memerland.segurity;
 
 import com.memerland.segurity.utils.BackupUtils;
 import com.memerland.segurity.utils.Config;
+import com.memerland.segurity.utils.PlayerConnected;
 import com.memerland.segurity.utils.WebServer;
 import com.memerland.segurity.commands.*;
+import com.memerland.segurity.daos.UserDao;
 import com.memerland.segurity.discord.DiscordUtils;
 import com.memerland.segurity.events.ChatsEvents;
 import com.memerland.segurity.events.SegurityEvents;
+import com.memerland.segurity.model.Coordenadas;
 import com.memerland.segurity.mongo.MongoUtils;
 import com.memerland.segurity.schedulers.BackupSchedule;
 
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Segurity extends JavaPlugin {
@@ -56,5 +60,13 @@ public final class Segurity extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
         DiscordUtils.disconnected();
+        UserDao userDao = new UserDao();
+        for (String playerName : PlayerConnected.playersConnected){
+            Player player = getServer().getPlayer(playerName);
+            userDao.saveLocation(playerName,Coordenadas.fromLocation(player.getLocation()));
+
+        }
+        userDao.close();
+
     }
 }
